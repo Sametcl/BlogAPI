@@ -1,4 +1,4 @@
-﻿using BlogAPI.Domain.Interfaces;
+﻿using BlogAPI.Infrastructure.Interfaces;
 using BlogAPI.Infrastructure.Presistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -31,7 +31,7 @@ namespace BlogAPI.Infrastructure.Repositories
             if (entity!=null)
             {
                 _context.Set<T>().Remove(entity);
-                _context.SaveChanges(); 
+                await  _context.SaveChangesAsync(); 
             }
         }
 
