@@ -13,6 +13,5 @@ namespace BlogAPI.Infrastructure.Interfaces
         Task AddAync(T entity);
         Task UpdateAync(T entity);
         Task DeleteAync(int id);
-
     }
 }

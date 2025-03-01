@@ -1,3 +1,6 @@
+using BlogAPI.Application.AutoMapper;
+using BlogAPI.Application.Services.Abstractions;
+using BlogAPI.Application.Services.Concrete;
 using BlogAPI.Infrastructure.Interfaces;
 using BlogAPI.Infrastructure.Presistence;
 using BlogAPI.Infrastructure.Repositories;
@@ -5,15 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DbContext
+builder.Services.AddDbContext<BlogDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-// DbContext
-builder.Services.AddDbContext<BlogDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
