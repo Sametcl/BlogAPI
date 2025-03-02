@@ -14,7 +14,7 @@ namespace BlogAPI.Domain.DTOs
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public int CategoryId { get; set; }
-        public Category? Category { get; set; }
-        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<CommentDto> Comments { get; set; } = new List<CommentDto>();
+
     }
 }

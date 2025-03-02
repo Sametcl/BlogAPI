@@ -13,9 +13,13 @@ namespace BlogAPI.Application.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap < Category,CategoryDto>().ReverseMap();
-            CreateMap < Comment,CommentDto>().ReverseMap();
-            CreateMap < Post,PostDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Post, PostDto>()
+            .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments.Select(c => c.Text).ToList()));
+            CreateMap<PostDto, Post>();
+
+            CreateMap<Comment, CommentDto>();
+            CreateMap<CommentDto, Comment>();
         }
     }
 }
