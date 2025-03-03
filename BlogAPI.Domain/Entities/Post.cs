@@ -7,7 +7,7 @@
         public string Content { get; set; }=string.Empty;
         public DateTime CreatedAt { get; set; }=DateTime.UtcNow;
 
-        //Post category 1-n 
+        //Post category 1-n  
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
 

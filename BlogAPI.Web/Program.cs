@@ -1,6 +1,4 @@
 using BlogAPI.Application.AutoMapper;
-using BlogAPI.Application.Services.Abstractions;
-using BlogAPI.Application.Services.Concrete;
 using BlogAPI.Infrastructure.Interfaces;
 using BlogAPI.Infrastructure.Presistence;
 using BlogAPI.Infrastructure.Repositories;
@@ -14,9 +12,6 @@ builder.Services.AddDbContext<BlogDbContext>(options =>
 
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IPostService, PostService>();
-builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
 
