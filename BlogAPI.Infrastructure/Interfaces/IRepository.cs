@@ -9,7 +9,7 @@ namespace BlogAPI.Infrastructure.Interfaces
     public interface IRepository<T> where T : class
     {
         Task<T> GetByIdAsync(int id);
-        Task<List<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync();
         Task AddAync(T entity);
         Task UpdateAync(T entity);
         Task DeleteAync(int id);
