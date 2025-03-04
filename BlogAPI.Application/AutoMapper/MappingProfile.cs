@@ -15,11 +15,10 @@ namespace BlogAPI.Application.AutoMapper
         {
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Post, PostDto>()
-            .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments.Select(c => c.Text).ToList()));
-            CreateMap<PostDto, Post>();
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments)).ReverseMap();
 
-            CreateMap<Comment, CommentDto>();
-            CreateMap<CommentDto, Comment>();
+            CreateMap<Comment, CommentDto>().ReverseMap();
         }
     }
 }

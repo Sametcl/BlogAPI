@@ -1,8 +1,21 @@
 using BlogAPI.Application.AutoMapper;
+using BlogAPI.Application.Services.Concrete;
+using BlogAPI.Application.Services.Interface;
+using BlogAPI.Domain.DTOs;
 using BlogAPI.Infrastructure.Interfaces;
 using BlogAPI.Infrastructure.Presistence;
 using BlogAPI.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+
+using BlogAPI.Application.AutoMapper;
+using BlogAPI.Application.Services.Concrete;
+using BlogAPI.Application.Services.Interface;
+using BlogAPI.Domain.DTOs;
+using BlogAPI.Infrastructure.Interfaces;
+using BlogAPI.Infrastructure.Presistence;
+using BlogAPI.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using BlogAPI.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,18 +23,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BlogDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+// Repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
+// Services
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IService<PostDto>, Service<PostDto, Post>>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
-
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
