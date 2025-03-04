@@ -16,6 +16,8 @@ using BlogAPI.Infrastructure.Presistence;
 using BlogAPI.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BlogAPI.Domain.Entities;
+using BlogAPI.Application.Validators;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +38,9 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IValidator<PostDto>, PostValidator>();
+
 
 var app = builder.Build();
 

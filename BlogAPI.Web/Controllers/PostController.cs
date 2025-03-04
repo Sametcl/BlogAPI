@@ -1,8 +1,12 @@
 ﻿using BlogAPI.Application.Services.Concrete;
 using BlogAPI.Application.Services.Interface;
 using BlogAPI.Domain.DTOs;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace BlogAPI.Web.Controllers
 {
@@ -10,14 +14,15 @@ namespace BlogAPI.Web.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        
-        private readonly ICommentService _commentService;
 
+        private readonly ICommentService _commentService;
+        private readonly IValidator<PostDto> _validator;
         private readonly IPostService _postService;
-        public PostController(ICommentService commentService, IPostService postService)
+        public PostController(ICommentService commentService, IPostService postService, IValidator<PostDto> validator)
         {
             _commentService = commentService;
             _postService = postService;
+            _validator = validator;
         }
 
         [HttpGet]
@@ -39,8 +44,12 @@ namespace BlogAPI.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PostDto postDto)
         {
-            if (postDto == null)
-                return BadRequest("Post verisi geçersiz.");
+            var validationresult = _validator.Validate(postDto);
+            if (!validationresult.IsValid)
+            {
+                return StatusCode(400,validationresult.Errors);
+            }
+
 
             await _postService.AddAsync(postDto);
             return CreatedAtAction(nameof(GetById), new { id = postDto.Id }, postDto);
