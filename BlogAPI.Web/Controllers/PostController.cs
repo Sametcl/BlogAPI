@@ -20,8 +20,6 @@ namespace BlogAPI.Web.Controllers
             _postService = postService;
         }
 
-
-
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -65,7 +63,6 @@ namespace BlogAPI.Web.Controllers
             return NoContent();
         }
 
-        // Yeni eklenen method: Post'a ait yorumları al
         [HttpGet("{postId}/comments")]
         public async Task<IActionResult> GetCommentsByPost(int postId)
         {

@@ -34,12 +34,12 @@ namespace BlogAPI.Application.Services.Concrete
 
         public async Task DeleteAsync(int id)
         {
-            var entity=_repository.GetByIdAsync(id);
+            var entity=await _repository.GetByIdAsync(id);
             if (entity==null)
             {
                 throw new Exception("silinecek id bulunamadi");
             }
-            await _repository.DeleteAync(id);
+            await _repository.DeleteAync(entity);
         }
 
         public async Task<List<TDto>> GetAllAsync()

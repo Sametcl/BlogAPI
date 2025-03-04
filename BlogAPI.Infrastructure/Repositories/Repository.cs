@@ -39,14 +39,11 @@ namespace BlogAPI.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAync(int id)
+        public async Task DeleteAync(T entity)
         {
-            var entity=await _context.Set<T>().FindAsync(id);
-            if (entity!=null)
-            {
-                _context.Set<T>().Remove(entity);
-                await  _context.SaveChangesAsync(); 
-            }
-        }      
+            _context.Set<T>().Remove(entity);
+            await _context.SaveChangesAsync();
+
+        }
     }
 }
